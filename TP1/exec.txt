@@ -1,0 +1,6 @@
+#! /bin/bash
+
+for i in {0..33}
+do
+python3 CSMAP.py 100 s100.txt
+done
