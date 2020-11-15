@@ -4,7 +4,6 @@ class Estacao():
     def __init__(self, id):
         self.id = id
         self.p = 0.01
-        self.q = 1 - self.p
         self.msg = True
         self.tfim = 0
         self.slot = 1
@@ -17,8 +16,8 @@ for i in range(n):
 nos_envio = []
 nos_final = []
 transmite = 0
-slot = 0
-count = 0
+slot = 0 #valor de posição do slot atual
+count = 0 #numero de estações que tentam transmitir no slot
 pos = 0
 while(nos != []):
     for j in nos:
@@ -30,20 +29,17 @@ while(nos != []):
     if count == 1: #somente uma estação que deveria transmitir nesse slot de tempo satisfez a probabilidade
         for y in nos_envio:
             for a in nos:
-                if pos == a.id:
+                if pos == a.id: #atualiza os valores do nó que foi transmitido
                     a.msg = False
                     a.tfim = slot * 0.0000512
                     nos_final.append(a)
-                    #print("Id:", a.id, "Passada: ", slot)
                     nos.remove(a)
-                if y.id == a.id:
+                if y.id == a.id: #atualiza valores dos outros nós que poderiam transmitir nesse slot mas não satisfizeram a probabilidade
                     a.slot += random.randint(1, n) 
-                    #caso outras estações tenham tentado transmitir nesse slot, mas não satisfazem a probabilidade, define o novo slot no qual devem tentar enviar
             
     elif(nos_envio != []): #indica que houve colisão ou que nenhuma estação satisfez a probabilidade 
         for x in nos_envio:
-            #print("Passada: %d .2" %slot, "Valor:", x.id )
-            for b in nos:
+            for b in nos: #atualiza o valor das estações que deveriam enviar nesse slot e não conseguiram
                 if x.id == b.id:
                     b.slot += random.randint(1, n) #define o novo slot no qual que as estações devem tentar enviar
 
@@ -53,6 +49,8 @@ while(nos != []):
 f = open(str(sys.argv[2]), "a")  
 f.write("Inicio " + str(nos_final[0].tfim) + "\n")
 f.write("Final " + str(nos_final[len(nos_final)-1].tfim) + "\n") 
+
+
  
 
     
