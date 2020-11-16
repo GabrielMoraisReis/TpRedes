@@ -11,13 +11,15 @@ def latencia(nome):
                 media_inicio += float(spl[1])
             elif(spl[0] == 'Final'):
                 media_fim += float(spl[1])
-    print("Media inicio =", media_inicio/34)
+    print("Media inicio = ", media_inicio/34)
     print("Media fim =", media_fim/34)
 
 
 
 sizes = [20, 40, 100]
-for size in sizes:
+print("Slotted Aloha")
+for size in sizes: 
+    
     latencia('aloha' + str(size) + '.txt') 
     
 

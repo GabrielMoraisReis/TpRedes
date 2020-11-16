@@ -32,9 +32,11 @@ class aloha:
 
             #verifica quantos nos desejam enviar mensagens nesse slot 
             for i in range(len(self.timeslot)): 
+                # se o slot demarcado no vetor for igual ao atual slot, 
                 if self.timeslot[i] == t_slot:   
+                    #  inclui o numero relacionado a posicao que equivale à estacao 
                     self.nodes_done.append(i)  
-            
+           # calcula quantos nos querem enviar nesse slot 
             num_nodes_done  = len(self.nodes_done)
             print("\nTamanho do vetor de nos competindo pelo timeslot {}: {}".format(t_slot,num_nodes_done)) 
             print("\nNos competindo pelo slot:",self.nodes_done) 
@@ -42,7 +44,8 @@ class aloha:
             if num_nodes_done > 1: 
                 #colision   
                 
-                for i in self.nodes_done:  
+                for i in self.nodes_done:   
+                        #sorteia em  slots, maior que o atual, para serem atribuidos aos nós em colisão  
                         self.timeslot[i] = random.randint(t_slot+1 , self.node+t_slot)          
                                
             ## envio da mensagem   
@@ -50,7 +53,9 @@ class aloha:
             if num_nodes_done == 1 : 
                 
                 print("\nnode {} is sending - Time: {}".format(self.nodes_done,self.total_time)) 
-                self.messages_delivered += 1  
+                #quanto maior o numero de mensagens mais proximo do fim a simulação estará
+                self.messages_delivered += 1    
+                # guarda o tempo de entrega da primeira mensagem correspondendo a primeira estação
                 if (self.messages_delivered == 1) : self.tempo_primeira_estacao = self.slot * t_slot
                 for i in range(len(self.timeslot)):  
                     if i == self.nodes_done[0]:
